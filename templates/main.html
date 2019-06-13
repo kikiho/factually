@@ -7,15 +7,18 @@
     <link href='https://fonts.googleapis.com/css?family=Mandali' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=News Cycle' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/css?family=Nosifer' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Avenir' rel='stylesheet'>
 
+    <!-- <a href="https://icons8.com/icon/52583/syringe">Syringe icon by Icons8</a> -->
 
     <title>factually ai</title>
     <style>
       body {
-        font-family: 'Montserrat';font-size: 22px;
-        background-color: #fefee1;
+        font-family: 'Montserrat';font-size: 15px;
+        background-color: #ffcbcb;
         font-weight: bold;
+        white-space: nowrap;
+        overflow-x: auto;
       }
 
       /* input {
@@ -23,7 +26,7 @@
         width: 40%;
       } */
 
-      input[type=text]{
+      textarea{
         border-radius: 8px;
         width: 30%;
         align: center;
@@ -56,16 +59,23 @@
         font-size: 30px
       }
       .h1{
-        font-size: 70px
+        font-size: 70px;
+        font-weight: bolder;
+      }
+
+      syringe, title1{ /*you can like put each one separately, if the margin for the first element is not wanted*/
+        display: inline-block;
+        margin-left: 10px;
       }
     </style>
 </head>
-<h1 align="center">factually ai</h1>
-<!-- <img src="factually.png" alt="Italian Trulli" align="center"> -->
+<title1>factually ai</title1>
+<img src="https://img.icons8.com/nolan/64/000000/syringe.png" class="syringe">
 <form action="{{ url_for('main') }}" method="POST">
   <h4 align="center">Enter some text</h4>
   <div align="center">
-    <input name="comment" type="text"required>
+    <textarea name="comment" cols="40" rows="5"></textarea>
+    <br>
     <br>
     <input type="submit">
   </div>
@@ -73,12 +83,12 @@
 <br>
 <div class="result" align="center">
     {% if result %}
-    	<!-- {% for variable, value in original_input.items() %}
+    	{% for variable, value in original_input.items() %}
     		<b>{{ variable }}</b> : {{ value }}
-    	{% endfor %} -->
+    	{% endfor %}
 		<br>
     	<br>
-   		<p style="font-size:30px">{{ result }}</p>
+   		<p style="font-size:15px">{{ result }}</p>
     {% endif %}
 </div>
 

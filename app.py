@@ -23,37 +23,42 @@ def main():
     if flask.request.method == 'POST':
         # Extract the input
         comment = flask.request.form['comment']
+        length = len(comment.split())
+        if (length < 10):
+            return flask.render_template('main.html',
+                                         original_input={},
+                                         result='Please enter a comment with more than 10 words',
+                                         )
+        else:
 
-        print (comment)
+            # Make DataFrame for model
+            # input_variables = pd.DataFrame([[temperature, humidity, windspeed]],
+            #                                columns=['temperature', 'humidity', 'windspeed'],
+            #                                dtype=float,
+            #                                index=['input'])
 
-        # Make DataFrame for model
-        # input_variables = pd.DataFrame([[temperature, humidity, windspeed]],
-        #                                columns=['temperature', 'humidity', 'windspeed'],
-        #                                dtype=float,
-        #                                index=['input'])
+            # Get the model's prediction
 
-        # Get the model's prediction
+            pred = prediction(comment)
 
-        pred = prediction(comment)
+            print (pred)
 
-        print (pred)
+            if (pred == '1'):
+                result = "This comment is anti-vax"
 
-        if (pred == '1'):
-            result = "This comment is anti-vax"
-
-        if (pred == '0'):
-            print ("hello")
-            result = "This comment is NOT anti-vax"
+            if (pred == '0'):
+                print ("hello")
+                result = "This comment is NOT anti-vax"
 
 
 
 
-        # Render the form again, but add in the prediction and remind user
-        # of the values they input before
-        return flask.render_template('main.html',
-                                     original_input={'Comment':comment},
-                                     result=result,
-                                     )
+            # Render the form again, but add in the prediction and remind user
+            # of the values they input before
+            return flask.render_template('main.html',
+                                         original_input={'Comment':comment},
+                                         result=result,
+                                         )
 
 definite_vocab = ['vaccine', 'vaccination','vax','vaxx','vaxxed','antivaccination', 'anti vaccination', 'antivax','antivaxx',
                  'injection', 'vaccines','vaccinations', 'VaccinesExposed', 'ForcedPoison' ,'FreedomExposed','unvaccinated',

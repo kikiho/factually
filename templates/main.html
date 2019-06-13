@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Andika' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Contrail One' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Faster One' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Mandali' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=News Cycle' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Nosifer' rel='stylesheet'>
+
+
+    <title>factually ai</title>
+    <style>
+      body {
+        font-family: 'Montserrat';font-size: 22px;
+        background-color: #fefee1;
+        font-weight: bold;
+      }
+
+      /* input {
+        margin: auto;
+        width: 40%;
+      } */
+
+      input[type=text]{
+        border-radius: 8px;
+        width: 30%;
+        align: center;
+
+      }
+
+      input[type=submit]{
+        align: center;
+        width: 7%;
+        border-radius: 8px;
+        background-color: #EADCA6;
+        font-family: 'Montserrat';
+        font-weight: bold;
+
+      }
+
+      input[type=submit]:hover {
+        background-color: #E2C275;
+        font-family: 'Montserrat';
+        font-weight: bold;
+
+      }
+
+      .result {
+          margin: auto;
+          width: 35%;
+          /* border: 1px solid #ccc; */
+      }
+      .title1{
+        font-size: 30px
+      }
+      .h1{
+        font-size: 70px
+      }
+    </style>
+</head>
+<h1 align="center">factually ai</h1>
+<!-- <img src="factually.png" alt="Italian Trulli" align="center"> -->
+<form action="{{ url_for('main') }}" method="POST">
+  <h4 align="center">Enter some text</h4>
+  <div align="center">
+    <input name="comment" type="text"required>
+    <br>
+    <input type="submit">
+  </div>
+</form>
+<br>
+<div class="result" align="center">
+    {% if result %}
+    	<!-- {% for variable, value in original_input.items() %}
+    		<b>{{ variable }}</b> : {{ value }}
+    	{% endfor %} -->
+		<br>
+    	<br>
+   		<p style="font-size:30px">{{ result }}</p>
+    {% endif %}
+</div>
+
+</html>

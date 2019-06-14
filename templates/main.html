@@ -15,7 +15,7 @@
     <style>
       body {
         font-family: 'Montserrat';font-size: 15px;
-        background-color: #ffcbcb;
+        background-color: white;
         font-weight: bold;
         white-space: nowrap;
         overflow-x: auto;
@@ -27,7 +27,7 @@
       } */
 
       textarea{
-        border-radius: 8px;
+        /* border-radius: 8px; */
         width: 30%;
         align: center;
 
@@ -36,15 +36,15 @@
       input[type=submit]{
         align: center;
         width: 7%;
-        border-radius: 8px;
-        background-color: #EADCA6;
+        /* border-radius: 8px; */
+        background-color: #E7F0FF;
         font-family: 'Montserrat';
         font-weight: bold;
 
       }
 
       input[type=submit]:hover {
-        background-color: #E2C275;
+        background-color: #E3EBFF;
         font-family: 'Montserrat';
         font-weight: bold;
 
@@ -53,24 +53,65 @@
       .result {
           margin: auto;
           width: 35%;
+          /* word-wrap: break-word; */
           /* border: 1px solid #ccc; */
       }
-      .title1{
+      /* .title1{
         font-size: 30px
-      }
+        align: center
+      } */
       .h1{
         font-size: 70px;
         font-weight: bolder;
       }
 
-      syringe, title1{ /*you can like put each one separately, if the margin for the first element is not wanted*/
+      .syringe{
         display: inline-block;
-        margin-left: 10px;
+        height: 50px;
+        width: auto;
       }
+
+      .title1{ /*you can like put each one separately, if the margin for the first element is not wanted*/
+        display: inline-block;
+        font-weight: bold;
+      }
+
+      .title-container{
+        text-align: center;
+        font-size: 70px;
+      }
+      #top, #bottom, #left, #right {
+      	background: #F9D1D1;
+      	position: fixed;
+      }
+      #left, #right {
+    		top: 0; bottom: 0;
+    		width: 45px;
+  		}
+  		#left { left: 0; }
+  		#right { right: 0; }
+
+    	#top, #bottom {
+    		left: 0; right: 0;
+    		height: 45px;
+  		}
+  		#top { top: 0; }
+  		#bottom { bottom: 0; }
     </style>
 </head>
-<title1>factually ai</title1>
-<img src="https://img.icons8.com/nolan/64/000000/syringe.png" class="syringe">
+<div id="left"></div>
+<div id="right"></div>
+<div id="top"></div>
+<div id="bottom"></div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="title-container">
+  <title1>factually ai</title1>
+  <img src="https://img.icons8.com/wired/64/000000/syringe.png">
+</div>
 <form action="{{ url_for('main') }}" method="POST">
   <h4 align="center">Enter some text</h4>
   <div align="center">
@@ -84,7 +125,7 @@
 <div class="result" align="center">
     {% if result %}
     	{% for variable, value in original_input.items() %}
-    		<b>{{ variable }}</b> : {{ value }}
+    		<b>{{ variable }}</b>: {{ value }}
     	{% endfor %}
 		<br>
     	<br>

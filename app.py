@@ -7,8 +7,8 @@ from sklearn.svm import LinearSVC
 import re
 # Use pickle to load in the pre-trained model
 
-isVaxRelevant = pickle.load( open( "antivax_model.sav", "rb" ) )
-isAntiVax = pickle.load(open( "relevance_model.sav", "rb"))
+isVaxRelevant = pickle.load(open("antivax_model.sav", "rb"))
+isAntiVax = pickle.load(open("relevance_model.sav", "rb"))
 count_vec = pickle.load(open('count_vec.sav','rb'))
 
 # Initialise the Flask app
@@ -67,8 +67,6 @@ definite_vocab = ['vaccine', 'vaccination','vax','vaxx','vaxxed','antivaccinatio
                   'wakefield']
 
 def prediction(sentence):
-
-
     prediction_related = 0
     prediction_antivax = 0
     bow = []

@@ -8,15 +8,17 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=News Cycle' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Avenir' rel='stylesheet'>
-
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Mali&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
     <!-- <a href="https://icons8.com/icon/52583/syringe">Syringe icon by Icons8</a> -->
 
     <title>factually ai</title>
     <style>
       body {
-        font-family: 'Montserrat';font-size: 15px;
+        font-family: 'Josefin Sans';font-size: 15px;
         background-color: white;
-        font-weight: bold;
+        /* font-weight: bold; */
         white-space: nowrap;
         overflow-x: auto;
       }
@@ -38,15 +40,15 @@
         width: 7%;
         /* border-radius: 8px; */
         background-color: #E7F0FF;
-        font-family: 'Montserrat';
-        font-weight: bold;
+        font-family: 'Josefin Sans';
+        /* font-weight: bold; */
 
       }
 
       input[type=submit]:hover {
         background-color: #E3EBFF;
-        font-family: 'Montserrat';
-        font-weight: bold;
+        font-family: 'Josefin Sans';
+        /* font-weight: bold; */
 
       }
 
@@ -62,7 +64,7 @@
       } */
       .h1{
         font-size: 70px;
-        font-weight: bolder;
+        /* font-weight: bolder; */
       }
 
       .syringe{
@@ -73,7 +75,7 @@
 
       .title1{ /*you can like put each one separately, if the margin for the first element is not wanted*/
         display: inline-block;
-        font-weight: bold;
+        /* font-weight: bold; */
       }
 
       .title-container{
@@ -108,29 +110,38 @@
 <br>
 <br>
 <br>
+<br>
+<br>
 <div class="title-container">
   <title1>factually ai</title1>
   <img src="https://img.icons8.com/wired/64/000000/syringe.png">
 </div>
 <form action="{{ url_for('main') }}" method="POST">
-  <h4 align="center">Enter some text</h4>
+  <h4 align="center">A preliminary demo that demonstrates the functionality of our model for identifying anti-vax comments.</h4>
   <div align="center">
-    <textarea name="comment" cols="40" rows="5"></textarea>
+    <!-- <textarea name="comment" cols="40" rows="5"></textarea> -->
     <br>
-    <br>
-    <input type="submit">
+    <input type="submit" name="submit" value="Comment">
+    <input type="submit" name="submit" value="Classify">
   </div>
-</form>
 <br>
+
+
+{% if comment %}
+  <p align="center">{{ comment }}</p>
+{% endif %}
+
 <div class="result" align="center">
     {% if result %}
-    	{% for variable, value in original_input.items() %}
-    		<b>{{ variable }}</b>: {{ value }}
-    	{% endfor %}
 		<br>
     	<br>
    		<p style="font-size:15px">{{ result }}</p>
     {% endif %}
 </div>
+
+{% if fact %}
+  <p align="center">{{ fact }}</p>
+{% endif %}
+
 
 </html>

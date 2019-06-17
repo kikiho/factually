@@ -5,7 +5,14 @@ import sklearn
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.svm import LinearSVC
 import re
+from flask import session
+import random
+
+import mythbuster
+
 # Use pickle to load in the pre-trained model
+
+vaxx_comments=["Vaccines need to be recalled not lettuce", "hello there", "hi again", "hey friend", "Nosodes are safer and a good alternative to vaccines."]
 
 isVaxRelevant = pickle.load(open("antivax_model.sav", "rb"))
 isAntiVax = pickle.load(open("relevance_model.sav", "rb"))
@@ -13,52 +20,52 @@ count_vec = pickle.load(open('count_vec.sav','rb'))
 
 # Initialise the Flask app
 app = flask.Flask(__name__, template_folder='templates')
+app.secret_key = 'super secret key'
 
 # Set up the main route
 @app.route('/', methods=['GET', 'POST'])
 def main():
+
     if flask.request.method == 'GET':
         # Just render the initial form, to get input
-        return(flask.render_template('main.html'))
+        session['to_test'] = ''
+        result = ""
+
+        return(flask.render_template('main.html',
+                                        comment="",
+                                        result="",
+                                        fact=""))
+
     if flask.request.method == 'POST':
         # Extract the input
-        comment = flask.request.form['comment']
-        length = len(comment.split())
-        if (length < 10):
-            return flask.render_template('main.html',
-                                         original_input={},
-                                         result='Please enter a comment with more than 10 words',
-                                         )
-        else:
 
-            # Make DataFrame for model
-            # input_variables = pd.DataFrame([[temperature, humidity, windspeed]],
-            #                                columns=['temperature', 'humidity', 'windspeed'],
-            #                                dtype=float,
-            #                                index=['input'])
 
-            # Get the model's prediction
 
-            pred = prediction(comment)
+        if flask.request.form['submit'] == 'Classify':
+            to_test = session.get('to_test')
+            pred = prediction(to_test)
+            fact = mythbuster.give_claim(to_test)
 
-            print (pred)
-
-            if (pred == '1'):
+            if pred == '1':
                 result = "This comment is anti-vax"
-
-            if (pred == '0'):
-                print ("hello")
+            if pred == '0':
                 result = "This comment is NOT anti-vax"
 
-
-
-
-            # Render the form again, but add in the prediction and remind user
-            # of the values they input before
             return flask.render_template('main.html',
-                                         original_input={'Comment':comment},
+                                         comment=to_test,
                                          result=result,
+                                         fact=fact,
                                          )
+
+        if flask.request.form['submit'] == 'Comment':
+            to_test = random.choice(vaxx_comments)
+            session['to_test'] = to_test
+            return flask.render_template('main.html',
+                                         comment=to_test,
+                                         result="",
+                                         fact=""
+                                         )
+
 
 definite_vocab = ['vaccine', 'vaccination','vax','vaxx','vaxxed','antivaccination', 'anti vaccination', 'antivax','antivaxx',
                  'injection', 'vaccines','vaccinations', 'VaccinesExposed', 'ForcedPoison' ,'FreedomExposed','unvaccinated',
@@ -130,5 +137,9 @@ def prediction(sentence):
 
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    # app.config['SESSION_TYPE'] = 'filesystem'
+    sess.init_app(app)
+
+    # app.debug = True
     app.run()

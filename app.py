@@ -11,12 +11,21 @@ import random
 import mythbuster
 
 # Use pickle to load in the pre-trained model
+df = pd.read_csv('test_comments1.csv')
+vaxx_comments = df['Comment']
 
-vaxx_comments=["Vaccines need to be recalled not lettuce", "hello there", "hi again", "hey friend", "Nosodes are safer and a good alternative to vaccines."]
+# print (vaxx_comments)
 
-isVaxRelevant = pickle.load(open("antivax_model.sav", "rb"))
-isAntiVax = pickle.load(open("relevance_model.sav", "rb"))
-count_vec = pickle.load(open('count_vec.sav','rb'))
+# vaxx_comments = ["Vaccines DO cause autism says the Harvard doctor whose expert testimony the government used to 'prove' vaccines don't cause autism. Read this excerpt from JB Handley's new book."]
+# vaxx_comments=["Vaccines need to be recalled not lettuce", "hello there", "hi again", "hey friend", "Nosodes are safer and a good alternative to vaccines.",
+#                 "Haha perfect record! Every LA case of whooping cough was vaccinated, every non-vaccinated student didn't get it.",
+#                 "Dr Jim Meehan, MD ...I will no longer vaccinate my children...",
+#                 "fyi parents pediatric hepatitis b vaccination guidance during the 2018 supply shortage  merck   s supply of pediatric hepatitis b vaccine  recombivax hb     will continue to be limited for the remainder of 2018 due to a manufacturing issue to supplement current vaccine availability gsk will continue to make an increased amount of pediatric hepatitis bcontaining vaccine available including both singlecomponent vaccine  engerixb    and combination vaccine  pediarix      do you know which version of the hep b vaccination your children are being administered   why is there a shortage of merck   s supply of pediatric hepatitis b vaccine  recombivax hb",
+#                 "Florida Wants to Track Vaccination Status of All its Citizens with Proposed New Law HELP STOP EXPANSION OF REQUIRED INTRUSIVE GOVERNMENT VACCINE TRACKING AND EN...FORCEMENT SYSTEM!  We need your help to defeat a terrible bill, HB 213 sponsored by Representative Ralph Massullo, M.D, which expands the intrusive Florida SHOTS vaccine tracking system. HB 213 needs to be opposed because:  1) HB 213 requires reporting by all vaccine administrators including tracking in the registry of refusal to participate rather than leaving reporting optional as in current statute.  2) HB 213 expands the registry from a childhood registry into an adult vaccine tracking registry by requiring the reporting of adult college and university students aged 19-23 or requiring tracking refusal to participate in the registry.  3) HB 213 exposes private vaccination and personal identifying records to collection and abuse by allowing automated data to be uploaded from existing automated systems, and making all the records in the registry available to permitted users and deleting current statute which requires the direct transfer from the registry to a user as needed.  4) HB 213 requires tracking of everyone from birth to 23 years old!  Do not be fooled by anyone claiming children or college students can opt-out of being tracked under this bill.  This is simply not true.  If HB 213 passes, every single person from birth to 23 will be tracked in this intrusive Florida vaccine enforcement and surveillance system either with their vaccination records or marked as a vaccine tracking refuser! There is no opting out of some kind of tracking in this system. Read the full article here: "]
+
+isVaxRelevant = pickle.load(open("model/relevance_model.sav", "rb"))
+isAntiVax = pickle.load(open("model/antivax_model.sav", "rb"))
+count_vec = pickle.load(open('model/count_vec.sav','rb'))
 
 # Initialise the Flask app
 app = flask.Flask(__name__, template_folder='templates')
@@ -44,12 +53,18 @@ def main():
         if flask.request.form['submit'] == 'Classify':
             to_test = session.get('to_test')
             pred = prediction(to_test)
-            fact = mythbuster.give_claim(to_test)
 
-            if pred == '1':
+            print ("prediction: ")
+            print (pred)
+
+            if pred == '1' or pred == 1:
                 result = "This comment is anti-vax"
-            if pred == '0':
+                fact = mythbuster.give_claim(to_test)
+            if pred == '0' or pred == 0:
                 result = "This comment is NOT anti-vax"
+                fact = ""
+
+            print (result)
 
             return flask.render_template('main.html',
                                          comment=to_test,
